@@ -2,7 +2,7 @@
 /*******************************************************************************
 ** Plugin Name: WP Convertidor de moneda
 **
-** Description: Un widget de conversión de moneda ajax para que sus visitantes puedan convertir las cantidades de moneda sobre la marcha (con tecnología de Google Finance).
+** Description: Un widget de conversión de moneda ajax para que sus visitantes puedan convertir las cantidades de moneda sobre la marcha.
 **
 ** Author: Felix Barros
 ** Author URI: https://felixbarros.blog
