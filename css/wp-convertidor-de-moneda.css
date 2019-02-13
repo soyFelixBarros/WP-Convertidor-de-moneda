@@ -1,0 +1,11 @@
+.wpcdm_tool select {
+	width: 100%;
+}
+
+.wpcdm_tool input[type="text"] {
+	min-width: 40%;
+}
+
+#wpcdm_converting {
+	display: none;
+}
