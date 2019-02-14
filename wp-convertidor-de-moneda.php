@@ -176,7 +176,7 @@ function wpcdmOnActivation() {
 ** @since 1.0.0
 *******************************************************************************/
 function wpcdmInit() {
-	//add_action('admin_menu', 'wpcdmMenu');
+	add_action('admin_menu', 'wpcdmMenu');
 	
 	if (!is_admin()) {
 		wp_enqueue_script('wp-convertidor-de-moneda', plugins_url('wp-convertidor-de-moneda/js/wp-convertidor-de-moneda.js'), array('jquery'));

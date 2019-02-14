@@ -61,6 +61,7 @@ class Widget_WPCDM extends WP_Widget {
 	
 	function retrieveCurrencyOptions($from_or_to = 'from_currencies', $default = '') {
 		$wpcdmOptions = get_option('wpcdmOptions');
+		echo $wpcdmOptions;
 		$currencies = explode("\n", $wpcdmOptions[$from_or_to]);
 		
 		$optionsArray = array();
@@ -90,7 +91,7 @@ class Widget_WPCDM extends WP_Widget {
 		// Valores por defecto
 		$defaults = array(
 			'titulo' => __('Convertidor de moneda', 'wpcdm'),
-			'parrafo_anterior' => __('Prueba nuestro conversor de divisas. ¡GRATIS!', 'wpcdm') . ':',
+			'parrafo_anterior' => __('Prueba nuestro conversor de divisas', 'wpcdm') . ':',
 			'convertir_desde' => '',
 			'a' => ''
 		);
@@ -141,7 +142,7 @@ class Widget_WPCDM extends WP_Widget {
 		'" name="' . 
 		$this->get_field_name('a') . 
 		'" value="' . 
-		$instance['a'] . '"  placeholder="Ej: USD, ARS, etc" />
+		$instance['a'] . '" placeholder="Ej: USD, ARS, etc" />
 		</p>';
 			
 	}
