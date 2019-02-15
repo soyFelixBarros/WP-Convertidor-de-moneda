@@ -15,83 +15,6 @@ require_once('wpcdmWidget.php'); // incluir el widget
 require_once('wpcdmShortcode.php'); // incluir el código corto
 
 /*******************************************************************************
-** wpcdmMenu()
-**
-** Configurar el menú de opciones de plugin.
-**
-** @since 1.0.0
-*******************************************************************************/
-function wpcdmMenu() {
-	if (is_admin()) {
-		register_setting('wp-convertidor-de-moneda', 'wpcdmOptions');
-		add_options_page('WP Convertidor de moneda - Ajustes', 'WP Convertidor de moneda', 'administrator', __FILE__, 'wpcdmOptions', '');
-	}
-}
-
-/*******************************************************************************
-** wpcdmOptions()
-**
-** Página de opciones de plugin
-**
-** @since 1.0.0
-*******************************************************************************/
-function wpcdmOptions() {
-	require_once('wpcdmSymbols.php');
-	
-	if (!current_user_can('manage_options'))  {
-		wp_die( __('No tiene permisos suficientes para acceder a esta página.') );
-	}
-	
-	echo '<div class="wrap">' . screen_icon() . '<h2>WP Convertidor de moneda</h2>';
-	
-	$wpcdmOptions = get_option('wpcdmOptions');
-	
-	if (!isset($wpcdmOptions['from_currencies']) || empty($wpcdmOptions['from_currencies'])) {
-		$wpcdmOptions['from_currencies'] = implode("\n", array_keys($currency));
-	}
-	
-	if (!isset($wpcdmOptions['to_currencies']) || empty($wpcdmOptions['to_currencies'])) {
-		$wpcdmOptions['to_currencies'] = implode("\n", array_keys($currency));
-	}
-	
-	echo '<div id="wpcdm_default_currencies" style="display: none;">' . implode("\n", array_keys($currency)) . '</div>';
-	
-	echo '<form method="post" action="options.php">';
-	
-	wp_nonce_field('update-options');
-	settings_fields( 'wp-currency-converter' );
-	
-	echo '<table class="form-table" style="width: 430px">';
-	
-	echo '<tr valign="top">
-	<th scope="col" style="white-space: nowrap;">De la lista de divisas:</th>
-	<th scope="col" style="white-space: nowrap;">A la lista de divisas:</th>
-	</tr>
-	
-	<tr valign="top">
-	
-	<td>
-		<textarea id="wpcdm_from_currencies" name="wpcdmOptions[from_currencies]" rows="20" cols="10">' . $wpcdmOptions['from_currencies'] . '</textarea>
-		<p><span class="description">' . __('Un código de moneda por línea', 'wpcdm') . '<br /><a href="#" id="wpcdm_restore_default_from_currencies">' . __('Haga clic para restaurar los valores predeterminados', 'wpcdm') . '</a><br /><a href="#" id="wpcdm_copy_to_currencies">' . __('Copiar "a" monedas', 'wpcdm') . '</a></span></p>
-	</td>
-	
-	<td>
-		<textarea id="wpcdm_to_currencies" name="wpcdmOptions[to_currencies]" rows="20" cols="10">' . $wpcdmOptions['to_currencies'] . '</textarea>
-		<p><span class="description">' . __('Un código de moneda por línea', 'wpcdm') . '<br /><a href="#" id="wpcdm_restore_default_to_currencies">' . __('Haga clic para restaurar los valores predeterminados', 'wpcdm') . '</a><br /><a href="#" id="wpcdm_copy_from_currencies">' . __('Copiar "De" monedas', 'wpcdm') . '</a></span></p>
-	</td>
-	
-	</tr>
-	
-	<tr valign="top">
-	<td colspan="2">
-		<input type="submit" class="button-primary" value="Guardar ajustes" />
-	</td>
-	</tr>';
-	
-	echo '</form></div>';
-}
-
-/*******************************************************************************
 ** wpcdmAjaxConvert()
 **
 ** Convertir las cantidades dadas
@@ -101,16 +24,24 @@ function wpcdmOptions() {
 function wpcdmAjaxConvert() {
 	require_once('wpcdmSymbols.php'); // simbolos de moneda para conversiones
 	
+	// Establecer propiedad de clase
+	$wpcdmApi = get_option( 'wpcdmApi' );
+
+	if ( $wpcdmApi['key'] === '' ) {
+		echo '<strong>IMPORTANTE:</strong> Tiene que ir a la Configuración del plugin y agregar la <a href="https://free.currencyconverterapi.com/free-api-key" target="_blank">API Key</a> que llega a su correo.';
+		exit();
+	}
+
 	$amount = $_POST['wpcdm_currency_amount'];
 	$currency_from = $_POST['wpcdm_currency_from'];
 	$currency_to = $_POST['wpcdm_currency_to'];
 	
-	if(!strstr($amount, '.')){
+	if( ! strstr($amount, '.') ) {
 		$amount = $amount . '.00';
 	}
 	
 	// URL de la API
-	$url = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . urlencode($currency_from) . '_' . urlencode($currency_to) .'&compact=ultra&apiKey=39ddcdeb35dd71a6843e&_=' . urlencode($amount);
+	$url = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . urlencode($currency_from) . '_' . urlencode($currency_to) .'&compact=ultra&apiKey=' . $wpcdmApi['key'] . '&_=' . urlencode($amount);
 	
 	if (function_exists('curl_init')) { // cURL está instalado en el servidor, así que use esto preferiblemente
 		$ch = curl_init();
@@ -176,7 +107,7 @@ function wpcdmOnActivation() {
 ** @since 1.0.0
 *******************************************************************************/
 function wpcdmInit() {
-	add_action('admin_menu', 'wpcdmMenu');
+	include('wpcdmSettingsPage.php');
 	
 	if (!is_admin()) {
 		wp_enqueue_script('wp-convertidor-de-moneda', plugins_url('wp-convertidor-de-moneda/js/wp-convertidor-de-moneda.js'), array('jquery'));

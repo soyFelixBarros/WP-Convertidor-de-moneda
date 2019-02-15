@@ -61,7 +61,6 @@ class Widget_WPCDM extends WP_Widget {
 	
 	function retrieveCurrencyOptions($from_or_to = 'from_currencies', $default = '') {
 		$wpcdmOptions = get_option('wpcdmOptions');
-		echo $wpcdmOptions;
 		$currencies = explode("\n", $wpcdmOptions[$from_or_to]);
 		
 		$optionsArray = array();
@@ -150,6 +149,6 @@ class Widget_WPCDM extends WP_Widget {
 
 add_action('widgets_init', 'wpcdmRegisterWidget');
 function wpcdmRegisterWidget() {
-    register_widget('Widget_wpcdm');
+    register_widget('Widget_WPCDM');
 }
 ?>
