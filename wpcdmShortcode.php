@@ -28,14 +28,9 @@ function wpcdmByShortcode($atts) {
 	if ( ! empty($a) ) $instance .= "&a=${a}";
         
     if ( ! is_a($wp_widget_factory->widgets[$widget_name], 'WP_Widget') ) {
-        $wp_class = 'WP_Widget_' . ucwords(strtolower($class));
-        if ( ! is_a($wp_widget_factory->widgets[$wp_class], 'WP_Widget' ) ) {
-            return '<p>' . __('ERROR: El widget WP Convertidor de moneda no se ha inicializado correctamente.', 'wpcdm') . '</p>';
-    	} else {
-            $class = $wp_class;
-    	}
+        return '<p>' . __('ERROR: El widget WP Convertidor de moneda no se ha inicializado correctamente.', 'wpcdm') . '</p>';
 	}
-    
+
     ob_start();
     
     the_widget(
