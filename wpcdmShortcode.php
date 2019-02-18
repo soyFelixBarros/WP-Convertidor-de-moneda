@@ -19,7 +19,7 @@ function wpcdmByShortcode($atts) {
     	)
     );
     
-    $widget_name = wp_specialchars( 'Widget_WPCDM' );
+    $widget_name = 'Widget_WPCDM';
     
 	$instance = "titulo=${titulo}";
     
