@@ -21,11 +21,11 @@ function wpcdmByShortcode($atts) {
     
     $widget_name = 'Widget_WPCDM';
     
-	$instance = "titulo=$title";
+	$instance = "titulo=${titulo}";
     
-    if ( ! empty($pretool_paragraph) ) $instance .= "&parrafo_anterior=$pretool_paragraph";
-    if ( ! empty($from_default) ) $instance .= "&convertir_desde=$from_default";
-	if ( ! empty($to_default) ) $instance .= "&a=$to_default";
+    if ( ! empty($parrafo_anterior) ) $instance .= "&parrafo_anterior=${parrafo_anterior}";
+    if ( ! empty($convertir_desde) ) $instance .= "&convertir_desde=${convertir_desde}";
+	if ( ! empty($a) ) $instance .= "&a=${a}";
         
     if ( ! is_a($wp_widget_factory->widgets[$widget_name], 'WP_Widget') ) {
         $wp_class = 'WP_Widget_' . ucwords(strtolower($class));
@@ -34,7 +34,7 @@ function wpcdmByShortcode($atts) {
     	} else {
             $class = $wp_class;
     	}
-    }
+	}
     
     ob_start();
     
