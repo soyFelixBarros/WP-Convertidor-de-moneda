@@ -19,7 +19,7 @@ function wpcdmByShortcode($atts) {
     	)
     );
     
-    $widget_name = 'Widget_WPCDM';
+    $widget_name = wp_specialchars( 'Widget_WPCDM' );
     
 	$instance = "titulo=${titulo}";
     
@@ -42,7 +42,7 @@ function wpcdmByShortcode($atts) {
     	$widget_name, 
     	$instance, 
     	array(
-			'widget_id' => 'shortcode-wpcdm-widget-' . $id,
+			'widget_id' => 'wp-convertidor-de-moneda-'.$id,
 			'before_widget' => '',
 			'after_widget' => '',
 			'before_title' => '',
@@ -59,6 +59,6 @@ function wpcdmByShortcode($atts) {
     
 }
 
-add_shortcode('wpcdm','wpcdmByShortcode',1); 
+add_shortcode('wpcdm', 'wpcdmByShortcode', 1); 
 
 ?>

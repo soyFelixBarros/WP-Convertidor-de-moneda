@@ -89,14 +89,14 @@ function wpcdmOnActivation() {
 	require_once('wpcdmSymbols.php'); // simbolos de moneda para conversiones
 	$wpcdmOptions = get_option('wpcdmOptions');
 	
-	if (!isset($wpcdmOptions['from_currencies']) || empty($wpcdmOptions['from_currencies']))
+	if ( ! isset($wpcdmOptions['from_currencies']) || empty($wpcdmOptions['from_currencies'])) {
 		$wpcdmOptions['from_currencies'] = implode("\n", array_keys($currency));
+	}
 	
-	if (!isset($wpcdmOptions['to_currencies']) || empty($wpcdmOptions['to_currencies']))
+	if ( ! isset($wpcdmOptions['to_currencies']) || empty($wpcdmOptions['to_currencies'])) {
 		$wpcdmOptions['to_currencies'] = implode("\n", array_keys($currency));
-		
+	}
 	update_option('wpcdmOptions', $wpcdmOptions);
-		
 }
 
 /*******************************************************************************
@@ -134,7 +134,7 @@ function wpcdmAdminInit() {
 ** @since 1.0.0
 *******************************************************************************/
 function wpcdmHead() {
-	if (!is_admin()) {
+	if ( ! is_admin() ) {
 		echo '<script type="text/javascript">var wpcdmAjaxLink="' . admin_url('admin-ajax.php') . '";</script>';
 	}
 }

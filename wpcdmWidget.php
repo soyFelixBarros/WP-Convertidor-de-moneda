@@ -23,7 +23,7 @@ class Widget_WPCDM extends WP_Widget {
 	function widget($args, $instance) {
 		extract( $args, EXTR_SKIP );
 		
-		$title = $instance['titulo'];
+		$titulo = $instance['titulo'];
 		$parrafo_anterior = $instance['parrafo_anterior'];
 		$convertir_desde = $instance['convertir_desde'];
 		$a = $instance['a'];
@@ -33,7 +33,7 @@ class Widget_WPCDM extends WP_Widget {
 		
 		echo '<div id="' . $args['widget_id'] . '" class="widget wp-convertidor-de-moneda-widget">';
 		
-		echo '<h3>' . $title . '</h3>';
+		echo '<h3>' . $titulo . '</h3>';
 		
 		// iniciar el contenido del widget
 		echo '<div>' . (!empty($parrafo_anterior) ? '<p>' . $parrafo_anterior . '</p>' : '');
