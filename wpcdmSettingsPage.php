@@ -104,7 +104,9 @@ class wpcdmSettingsPage
      */
     public function print_section_info()
     {
-        print 'Ingrese los datos a continuación:';
+        print 'Pasos para activar el servicio de divisas:<br>
+        <strong>1.</strong> Ingresa tu correo en <a href="https://free.currencyconverterapi.com/free-api-key" target="_blank">currencyconverterapi.com</a>.<br>
+        <strong>2.</strong> Te llegara un correo con la API Key, copiala y pégala aquí abajo:';
     }
 
     /** 
